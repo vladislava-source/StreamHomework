@@ -1,13 +1,28 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-void main() {
-  //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-  // to see how IntelliJ IDEA suggests fixing it.
-  IO.println(String.format("Hello and welcome!"));
+import java.util.List;
+import java.util.stream.Stream;
 
-  for (int i = 1; i <= 5; i++) {
-    //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-    // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-    IO.println("i = " + i);
-  }
+public class Main {
+    public static void main(String[] args) {
+        List<String> names = List.of("Ivan", "Maria", "Peter", "Anna", "Oleg");
+        System.out.println("Завдання 1: " + StreamTasks.oddIndexedNames(names));
+
+        List<String> words = List.of("ivan", "peter", "anna", "maria");
+        System.out.println("Завдання 2: " + StreamTasks.upperCaseSortedDesc(words));
+
+        String[] input = {"1, 2, 0", "4, 5"};
+        System.out.println("Завдання 3: " + StreamTasks.extractAndSortNumbers(input));
+
+        long a = 25214903917L;
+        long c = 11L;
+        long m = 1L << 48;
+        List<Long> randoms = StreamTasks.lcgStream(0L, a, c, m)
+                .limit(10)
+                .toList();
+        System.out.println("Завдання 4: " + randoms);
+
+        Stream<String> s1 = Stream.of("A", "B", "C", "D");
+        Stream<String> s2 = Stream.of("1", "2", "3");
+        List<String> zipped = StreamTasks.zip(s1, s2).toList();
+        System.out.println("Завдання 5: " + zipped);
+    }
 }
