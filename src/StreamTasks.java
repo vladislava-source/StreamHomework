@@ -41,8 +41,19 @@ public class StreamTasks {
 
     // Завдання 4: лінійний конгруентний генератор через Stream.iterate (без Math.random)
     public static Stream<Long> lcgStream(long seed, long a, long c, long m) {
-        long start = Math.floorMod(seed, m);
-        return Stream.iterate(start, x -> (a * x + c) % m);
+        java.math.BigInteger bigA = java.math.BigInteger.valueOf(a);
+        java.math.BigInteger bigC = java.math.BigInteger.valueOf(c);
+        java.math.BigInteger bigM = java.math.BigInteger.valueOf(m);
+        long start = java.math.BigInteger.valueOf(seed).mod(bigM).longValue();
+
+        return Stream.iterate(
+                start,
+                x -> java.math.BigInteger.valueOf(x)
+                        .multiply(bigA)
+                        .add(bigC)
+                        .mod(bigM)
+                        .longValue()
+        );
     }
 
     // Завдання 5: «перемішування» двох стрімів до завершення коротшого
@@ -55,7 +66,10 @@ public class StreamTasks {
 
             @Override
             public boolean hasNext() {
-                return it1.hasNext() && it2.hasNext();
+                if (takeFirst) {
+                    return it1.hasNext() && it2.hasNext();
+                }
+                return it2.hasNext();
             }
 
             @Override
